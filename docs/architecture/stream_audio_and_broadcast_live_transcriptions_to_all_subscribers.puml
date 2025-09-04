@@ -1,0 +1,49 @@
+@startuml
+title Stream audio and broadcast live transcriptions to all subscribers
+autonumber
+
+actor "Client A (Speaker)" as ClientA
+actor "Client B (Subscriber)" as ClientB
+actor "Client C (Subscriber)" as ClientC
+
+box "Backend"
+participant "FastAPI gateway\nLoad Balancer\nReverse Proxy" as FastAPIApp
+participant "Transcript Service" as TranscriptService
+database "In Memory Cache" as Cache
+participant "Text To Speech Service" as TTSService
+end box
+
+== Precondition: session exists and clients are subscribed ==
+
+loop For each audio chunk
+  ClientA -> FastAPIApp: WS send(AudioChunk, sessionId)
+  FastAPIApp -> TranscriptService: forward_chunk(sessionId, chunk)
+  TranscriptService -> Cache: GET session state
+  Cache --> TranscriptService: session
+  TranscriptService -> TranscriptService: STT on chunk → partial_text
+  TranscriptService -> Cache: APPEND partial_text; PUBLISH sessionId
+  TranscriptService --> FastAPIApp: TranscriptUpdate(partial_text)
+
+  par Broadcast to subscribers
+    FastAPIApp --> ClientA: TranscriptUpdate(partial_text)
+    FastAPIApp --> ClientB: TranscriptUpdate(partial_text)
+    FastAPIApp --> ClientC: TranscriptUpdate(partial_text)
+  end
+end
+
+alt End of stream
+  ClientA -> FastAPIApp: WS send(EndOfStream)
+  FastAPIApp -> TranscriptService: finalize(sessionId)
+  TranscriptService -> Cache: GET full transcript
+  TranscriptService --> FastAPIApp: FinalTranscript
+  par Deliver final transcript
+    FastAPIApp --> ClientA: FinalTranscript
+    FastAPIApp --> ClientB: FinalTranscript
+    FastAPIApp --> ClientC: FinalTranscript
+  end
+  FastAPIApp --> ClientA: Close WS
+else Error
+  TranscriptService --> FastAPIApp: Error(status, reason)
+  FastAPIApp --> ClientA: Error + Close WS
+end
+@enduml
