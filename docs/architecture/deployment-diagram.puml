@@ -1,12 +1,15 @@
 @startuml
 
 ' Define the components
-package "Backend" as API {
-    component "FastAPI gateway\nLoad Balancer\nReverse Proxy" as FastAPIApp
-    component "Text To Speech Service" as TTSService
-    component "Transcript Service" as TranscriptService
-    database "In Memory Cache" as Cache
-    component "Authentication Service" as AuthService
+node "Server" as API {
+    node "Backend Container\n (Docker)" as DockerImage {
+        component "FastAPI gateway\nLoad Balancer\nReverse Proxy" as FastAPIApp
+        component "Text To Speech Service" as TTSService
+        component "Transcript Service" as TranscriptService
+        component "Authentication Service" as AuthService
+    }
+    database "In Memory Cache\n (Redis)" as Cache
+
 }
 
 collections "Web Clients" as WebClient
