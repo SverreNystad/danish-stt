@@ -1,0 +1,23 @@
+@startuml
+
+' Define the components
+package "Backend" as API {
+    component "FastAPI gateway\nLoad Balancer\nReverse Proxy" as FastAPIApp
+    component "Text To Speech Service" as TTSService
+    component "Transcript Service" as TranscriptService
+    database "In Memory Cache" as Cache
+    component "Authentication Service" as AuthService
+}
+
+collections "Web Clients" as WebClient
+
+
+FastAPIApp -down-> TranscriptService : Uses
+FastAPIApp -down-> AuthService : Uses
+
+TranscriptService -down-> TTSService : Uses
+TranscriptService -down-> Cache : Uses
+
+WebClient "*" -down-> "1" FastAPIApp : <<HTTP>> Streaming API Requests (WebSocket)
+
+@enduml
