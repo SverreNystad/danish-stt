@@ -1,0 +1,36 @@
+@startuml
+title Start a live transcription session and subscribe clients
+autonumber
+
+actor "Session Owner" as Owner
+actor "Subscriber" as Subscriber
+
+box "Backend"
+participant "API Gateway" as FastAPIApp
+participant "Authentication Service" as AuthService
+participant "Transcript Service" as TranscriptService
+database "In Memory Cache" as Cache
+end box
+
+Owner -> FastAPIApp: Open WebSocket (token)
+FastAPIApp -> AuthService: Validate(token)
+AuthService --> FastAPIApp: 200 OK / user
+FastAPIApp --> Owner: WS accepted
+
+Owner -> FastAPIApp: StartSession(metadata)
+FastAPIApp -> TranscriptService: create_session(user, metadata)
+TranscriptService -> Cache: SET session {id, owner, subscribers=[]}
+Cache --> TranscriptService: ACK
+TranscriptService --> FastAPIApp: sessionId
+FastAPIApp --> Owner: session_started(sessionId)
+
+... later ...
+Subscriber -> FastAPIApp: Open WebSocket (token)
+FastAPIApp -> AuthService: Validate(token)
+AuthService --> FastAPIApp: 200 OK / user
+FastAPIApp --> Subscriber: WS accepted
+
+note over Cache
+Stores session state, partial/final transcripts
+end note
+@enduml
