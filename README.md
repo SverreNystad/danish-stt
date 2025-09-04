@@ -1,12 +1,12 @@
-<!-- TODO: CHANGE ALL INSTANCES OF "PROJECT-TEMPLATE" IN ENTIRE PROJECT TO YOUR PROJECT TITLE-->
+<!-- TODO: CHANGE ALL INSTANCES OF "dansk2norsk" IN ENTIRE PROJECT TO YOUR PROJECT TITLE-->
 
-# PROJECT-TEMPLATE
+# dansk2norsk
 
 <div align="center">
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/CogitoNTNU/PROJECT-TEMPLATE/ci.yml)
-![GitHub top language](https://img.shields.io/github/languages/top/CogitoNTNU/PROJECT-TEMPLATE)
-![GitHub language count](https://img.shields.io/github/languages/count/CogitoNTNU/PROJECT-TEMPLATE)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/CogitoNTNU/dansk2norsk/ci.yml)
+![GitHub top language](https://img.shields.io/github/languages/top/CogitoNTNU/dansk2norsk)
+![GitHub language count](https://img.shields.io/github/languages/count/CogitoNTNU/dansk2norsk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Project Version](https://img.shields.io/badge/version-0.0.1-blue)](https://img.shields.io/badge/version-0.0.1-blue)
 
@@ -16,7 +16,7 @@
 <details> 
 <summary><b>📋 Table of contents </b></summary>
 
-- [PROJECT-TEMPLATE](#PROJECT-TEMPLATE)
+- [dansk2norsk](#dansk2norsk)
   - [Description](#description)
   - [🛠️ Prerequisites](#%EF%B8%8F-prerequisites)
   - [Getting started](#getting-started)
@@ -52,8 +52,8 @@ For example: OS version, programs, libraries, etc.
 1. **Clone the repository**:
 
    ```sh
-   git clone https://github.com/CogitoNTNU/PROJECT-TEMPLATE.git
-   cd PROJECT-TEMPLATE
+   git clone https://github.com/CogitoNTNU/dansk2norsk.git
+   cd dansk2norsk
    ```
 
 1. **Install dependencies**:
@@ -95,7 +95,7 @@ uv run mkdocs build
 uv run mkdocs serve
 ```
 
-This will build the documentation and start a local server at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) where you can browse the docs and API reference. Get the documentation according to the lastes commit on main by viewing the `gh-pages` branch on GitHub: [https://cogitontnu.github.io/PROJECT-TEMPLATE/](https://cogitontnu.github.io/PROJECT-TEMPLATE/).
+This will build the documentation and start a local server at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) where you can browse the docs and API reference. Get the documentation according to the lastes commit on main by viewing the `gh-pages` branch on GitHub: [https://cogitontnu.github.io/dansk2norsk/](https://cogitontnu.github.io/dansk2norsk/).
 
 ## Testing
 
