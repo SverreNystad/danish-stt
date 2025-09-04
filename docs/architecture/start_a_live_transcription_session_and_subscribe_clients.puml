@@ -2,43 +2,35 @@
 title Start a live transcription session and subscribe clients
 autonumber
 
-actor "Client A (Owner)" as ClientA
-actor "Client B (Subscriber)" as ClientB
+actor "Session Owner" as Owner
+actor "Subscriber" as Subscriber
 
 box "Backend"
-participant "FastAPI gateway\nLoad Balancer\nReverse Proxy" as FastAPIApp
+participant "API Gateway" as FastAPIApp
 participant "Authentication Service" as AuthService
 participant "Transcript Service" as TranscriptService
 database "In Memory Cache" as Cache
 end box
 
-ClientA -> FastAPIApp: Open WebSocket (token)
+Owner -> FastAPIApp: Open WebSocket (token)
 FastAPIApp -> AuthService: Validate(token)
 AuthService --> FastAPIApp: 200 OK / user
-FastAPIApp --> ClientA: WS accepted
+FastAPIApp --> Owner: WS accepted
 
-ClientA -> FastAPIApp: StartSession(metadata)
+Owner -> FastAPIApp: StartSession(metadata)
 FastAPIApp -> TranscriptService: create_session(user, metadata)
 TranscriptService -> Cache: SET session {id, owner, subscribers=[]}
 Cache --> TranscriptService: ACK
 TranscriptService --> FastAPIApp: sessionId
-FastAPIApp --> ClientA: session_started(sessionId)
+FastAPIApp --> Owner: session_started(sessionId)
 
 ... later ...
-ClientB -> FastAPIApp: Open WebSocket (token)
+Subscriber -> FastAPIApp: Open WebSocket (token)
 FastAPIApp -> AuthService: Validate(token)
 AuthService --> FastAPIApp: 200 OK / user
-FastAPIApp --> ClientB: WS accepted
-
-ClientB -> FastAPIApp: Subscribe(sessionId)
-FastAPIApp -> TranscriptService: add_subscriber(sessionId, ClientB)
-TranscriptService -> Cache: UPDATE session.subscribers += ClientB
-Cache --> TranscriptService: ACK
-TranscriptService --> FastAPIApp: subscribed(sessionId, ClientB)
-FastAPIApp --> ClientB: subscribed(sessionId)
+FastAPIApp --> Subscriber: WS accepted
 
 note over Cache
-Stores session state, partial/final transcripts,
-and subscriber list for fast fan-out.
+Stores session state, partial/final transcripts
 end note
 @enduml
