@@ -18,7 +18,7 @@
 
 - [danish-stt](#danish-stt)
   - [Description](#description)
-  - [🛠️ Prerequisites](#️-prerequisites)
+  - [🛠️ Prerequisites](#%EF%B8%8F-prerequisites)
   - [Getting started](#getting-started)
   - [Usage](#usage)
     - [📖 Generate Documentation Site](#-generate-documentation-site)
@@ -81,7 +81,7 @@ For example: OS version, programs, libraries, etc.
 To run the project, run the following command from the root directory of the project:
 
 ```bash
-
+uv run python client.py
 ```
 
 <!-- TODO: Instructions on how to run the project and use its features. -->
@@ -106,7 +106,6 @@ uv run pytest --doctest-modules --cov=src --cov-report=html
 ```
 
 ## Contributors
-
 
 <table align="center">
     <tr>
