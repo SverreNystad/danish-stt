@@ -18,12 +18,12 @@
 
 - [danish-stt](#danish-stt)
   - [Description](#description)
-  - [🛠️ Prerequisites](#%EF%B8%8F-prerequisites)
+  - [🛠️ Prerequisites](#️-prerequisites)
   - [Getting started](#getting-started)
   - [Usage](#usage)
     - [📖 Generate Documentation Site](#-generate-documentation-site)
   - [Testing](#testing)
-  - [Team](#team)
+  - [Contributors](#contributors)
     - [License](#license)
 
 </details>
@@ -105,20 +105,23 @@ To run the test suite, run the following command from the root directory of the 
 uv run pytest --doctest-modules --cov=src --cov-report=html
 ```
 
-## Team
+## Contributors
 
-This project would not have been possible without the hard work and dedication of all of the contributors. Thank you for the time and effort you have put into making this project a reality.
 
 <table align="center">
     <tr>
-        <!--
         <td align="center">
-            <a href="https://github.com/NAME_OF_MEMBER">
-              <img src="https://github.com/NAME_OF_MEMBER.png?size=100" width="100px;" alt="NAME OF MEMBER"/><br />
-              <sub><b>NAME OF MEMBER</b></sub>
+            <a href="https://github.com/Eduard-Prokhorikhin">
+              <img src="https://github.com/Eduard-Prokhorikhin.png?size=100" width="100px;" alt="Eduard Prokhorikhin"/><br />
+              <sub><b>Eduard Prokhorikhin</b></sub>
             </a>
         </td>
-        -->
+        <td align="center">
+            <a href="https://github.com/SverreNystad">
+              <img src="https://github.com/SverreNystad.png?size=100" width="100px;" alt="Sverre Nystad"/><br />
+              <sub><b>Sverre Nystad</b></sub>
+            </a>
+        </td>
     </tr>
 </table>
 
