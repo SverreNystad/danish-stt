@@ -4,8 +4,8 @@ from src.dao import create_session_id, fetch_session_transcript
 from loguru import logger
 
 app = FastAPI(
-    title="The Transcription Microservice API",
-    description="API that takes in audio and distributes transcriptions for sessions.",
+    title="The Transcription API",
+    description="API for real-time transcription distributed to all clients in a session",
     version="1.0.0",
 )
 
@@ -15,13 +15,16 @@ app = FastAPI(
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     session_id = create_session_id()
+    logger.info(f"Created session with id: {session_id}")
     await websocket.send_text(session_id)
     while True:
         data = await websocket.receive_bytes()
         logger.info(f"Received {len(data)} bytes")
+        # TODO: Process audio data and update transcript in DB
 
         transcript = fetch_session_transcript(session_id)
         await websocket.send_text(transcript.text)
+        logger.debug(f"Sent transcript: {transcript.text}")
 
 
 # Client websocket
