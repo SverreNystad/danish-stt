@@ -1,6 +1,7 @@
 from fastapi import FastAPI, WebSocket
 
-from src.dao import fetch_session_transcript
+from src.dao import create_session_id, fetch_session_transcript
+from loguru import logger
 
 app = FastAPI(
     title="The Transcription Microservice API",
@@ -15,7 +16,11 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
         data = await websocket.receive_bytes()
-        await websocket.send_text(f"Message text was: {data}")
+        logger.info(f"Received {len(data)} bytes")
+
+        session_id = create_session_id()
+        transcript = fetch_session_transcript(session_id)
+        await websocket.send_text(transcript.text)
 
 
 # Client websocket
