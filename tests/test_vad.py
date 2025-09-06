@@ -1,8 +1,10 @@
+import pytest
 from silero_vad import read_audio
 
 from src.vad_service import get_vad_timestamps
 
 
+@pytest.mark.slow
 def test_vad_timestamps():
     """
     Test function for get_vad_timestamps.
