@@ -6,8 +6,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 license-files = ["LICENSE"]
 dependencies = [
+    "fastapi>=0.116.1",
     "gradio>=5.44.1",
+    "redis>=6.4.0",
     "silero-vad>=6.0.0",
+    "uvicorn>=0.35.0",
 ]
 
 
