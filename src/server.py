@@ -14,11 +14,12 @@ app = FastAPI(
 @app.websocket("/ws/host")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+    session_id = create_session_id()
+    await websocket.send_text(session_id)
     while True:
         data = await websocket.receive_bytes()
         logger.info(f"Received {len(data)} bytes")
 
-        session_id = create_session_id()
         transcript = fetch_session_transcript(session_id)
         await websocket.send_text(transcript.text)
 
