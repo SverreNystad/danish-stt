@@ -1,5 +1,6 @@
 from fastapi import FastAPI, WebSocket
 
+from src.stt_service import audio_to_transcription
 from src.dao import create_session_id, fetch_session_transcript
 from loguru import logger
 
@@ -21,10 +22,10 @@ async def websocket_endpoint(websocket: WebSocket):
         data = await websocket.receive_bytes()
         logger.info(f"Received {len(data)} bytes")
         # TODO: Process audio data and update transcript in DB
+        text = audio_to_transcription(data)
 
-        transcript = fetch_session_transcript(session_id)
-        await websocket.send_text(transcript.text)
-        logger.debug(f"Sent transcript: {transcript.text}")
+        await websocket.send_text(text)
+        logger.debug(f"Sent transcript: {text}")
 
 
 # Client websocket
